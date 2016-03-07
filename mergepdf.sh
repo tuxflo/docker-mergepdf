@@ -12,6 +12,7 @@ fi
 if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   #no multipage pdf file, move directly to Output folder
   until err_str=$(lsof $1 2>&1 >/dev/null); do
+    echo "lsof file check"
     if [ -n "$err_str" ]; then
       # lsof printed an error string, file may or may not be open
       echo "lsof: $err_str" >&2
