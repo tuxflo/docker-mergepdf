@@ -28,7 +28,7 @@ stringMerged=${stringOdd/%_o.pdf/_merged.pdf}
 
 if [[ -f $stringOdd && -f $stringEven ]]; then
   pdftk A=$stringOdd B=$stringEven shuffle A Bend-1 output $OUTPUT/$stringMerged
-  rm $stringOdd $stringEven
+  rm  -f $stringOdd $stringEven
   sleep 2 #needed when copying multiple files into the Input folder
   exit
 fi
