@@ -12,6 +12,7 @@ fi
 if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   #no multipage pdf file, move directly to Output folder
   #sleep 40
+  TMP=0
   until [ $TMP -eq $(stat -c %s $1) ]
   do
     TMP=$(stat -c %s $1)
