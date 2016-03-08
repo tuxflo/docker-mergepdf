@@ -14,12 +14,13 @@ if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   until err_str=$(lsof $1 2>&1 >/dev/null); do
     if [ -n "$err_str" ]; then
       # lsof printed an error string, file may or may not be open
-      echo "lsof: $err_str" >&2
+      echo "lsof: $err_str"
 
       # tricky to decide what to do here, you may want to retry a number of times,
       # but for this example just break
       break
     fi
+    echo "file not finished, waiting a second"
 
     # lsof returned 1 but didn't print an error string, assume the file is open
     sleep 1
@@ -27,6 +28,7 @@ if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
 
   if [ -z "$err_str" ]; then
     # file has been closed, move it
+    echo "moving file"
     mv $1 $OUTPUT
   fi
   exit
