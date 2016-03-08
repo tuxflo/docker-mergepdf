@@ -2,7 +2,7 @@ FROM ruudk/pdftk
 
 MAINTAINER tuxflo
 
-RUN apt-get update & apt-get install -y incron lsof
+RUN apt-get update && apt-get upgrade -y && apt-get install -y incron rsync
 
 ADD ./mergepdf.sh /opt/mergepdf.sh
 RUN chmod a+x /opt/mergepdf.sh
