@@ -22,7 +22,7 @@ if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   echo "copied to output"
   cp $1 $OUTPUT
   sleep 3
-  mv $1 $1_bkp
+  mv --backup=t $1 $1_bkp
   echo "moved to $1_bkp"
   exit
 fi
