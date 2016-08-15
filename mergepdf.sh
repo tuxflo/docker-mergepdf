@@ -22,7 +22,7 @@ if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   echo "copied to output"
   cp $1 $OUTPUT
   sleep 3
-  mv --backup=t $1 $1_bkp
+  mv --backup=t $1 $1\_bkp
   echo "moved to $1_bkp"
   exit
 fi
@@ -44,12 +44,14 @@ stringMerged=${stringOdd/%_o.pdf/_merged.pdf}
 if [[ -f $stringOdd && -f $stringEven ]]; then
   sleep 15
   echo "executing pdftk"
-  pdftk A=$stringOdd B=$stringEven shuffle A Bend-1 output $OUTPUT/$stringMerged
+  pdftk A=$stringOdd B=$stringEven shuffle A Bend-1 output $stringMerged
   sleep 3
+  cp $stringMerged $OUTPUT/
+  mv $stringMerged $stringMerged\_bkp
   echo "removing files"
   #rm  -f $stringOdd $stringEven
-  mv $stringOdd $stringOdd_bkp
-  mv $stringEven $stringEven_bkp
+  mv $stringOdd $stringOdd\_bkp
+  mv $stringEven $stringEven\_bkp
   sleep 2 #needed when copying multiple files into the Input folder
   echo "done..."
   exit
