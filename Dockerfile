@@ -2,7 +2,7 @@ FROM ruudk/pdftk
 
 MAINTAINER tuxflo
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y incron
+RUN apt-get update && apt-get upgrade -y && apt-get install -y incron inotify-tools
 
 ADD ./mergepdf.sh /opt/mergepdf.sh
 RUN chmod a+x /opt/mergepdf.sh
