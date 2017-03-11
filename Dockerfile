@@ -2,7 +2,8 @@ FROM ubuntu:16.10
 
 MAINTAINER tuxflo
 
-RUN apt-get update && apt-get -y install build-essential unzip wget pdftk vim
+RUN apt-get update && apt-get -y install build-essential unzip wget pdftk vim software-properties-common python-software-properties
+RUN add-apt-repository ppa:alex-p/tesseract-ocr
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y incron inotify-tools ocrmypdf tesseract-ocr tesseract-ocr-deu
 
