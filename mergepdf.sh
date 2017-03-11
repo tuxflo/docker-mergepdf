@@ -19,8 +19,9 @@ if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   echo "$(date +%F-%T) detected non mutlipage file"
   inotifywait -e close $1
   sleep 3
-  echo "$(date +%F-%T) copied to output"
-  cp $1 $OUTPUT
+  echo "doing OCR processing..."
+  ocrmypdf -c -d -f -l deu $1 $OUTPUT/$1
+  echo "$(date +%F-%T) OCR done!"
   sleep 3
   mv --backup=t $1 $1\_$(date +%F-%T)
   echo "moved to $1_$(date +%F-%T)"
@@ -46,11 +47,15 @@ if [[ -f $stringOdd && -f $stringEven ]]; then
   sleep 1
   echo "executing pdftk"
   pdftk A=$stringOdd B=$stringEven shuffle A Bend-1 output $stringMerged
+  if [[ $RET -eq 0 ]]; then
+    echo "pdftk was successful, starting OCR processing..."
+    ocrmypdf -c -d -f -l deu $stringMerged $OUTPUT
+    echo "ORC done removing temporary files..."
+    rm  -f $stringOdd $stringEven
+  fi
+
   sleep 1
-  cp $stringMerged $OUTPUT/
   mv $stringMerged $stringMerged\_$(date +%F-%T)
-  echo "removing files"
-  rm  -f $stringOdd $stringEven
   sleep 2 #needed when copying multiple files into the Input folder
   echo "done..."
   exit
