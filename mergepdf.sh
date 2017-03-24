@@ -20,11 +20,11 @@ if [[  "$1" != *_o.pdf && "$1" != *_e.pdf  ]]; then
   inotifywait -e close $1
   sleep 3
   echo "doing OCR processing..."
-  ts ocrmypdf -c -d -f --tesseract-timeout $TIMEOUT -l deu $1 $OUTPUT/$1
+  ts ocrmypdf -c -d -f --tesseract-timeout TIMEOUT -l deu $1 $OUTPUT/$1
   ts echo "$(date +%F-%T) OCR done!"
   sleep 3
-  ts mv --backup=t $1 $1\_$(date +%F-%T)
-  ts echo "moved to $1_$(date +%F-%T)"
+  mv --backup=t $1 $1\_$(date +%F-%T)
+  echo "moved to $1_$(date +%F-%T)"
   exit
 fi
 
@@ -49,14 +49,14 @@ if [[ -f $stringOdd && -f $stringEven ]]; then
   pdftk A=$stringOdd B=$stringEven shuffle A Bend-1 output $stringMerged
   if [[ $RET -eq 0 ]]; then
     echo "pdftk was successful, starting OCR processing..."
-    ts ocrmypdf -c -d -f --tesseract-timeout $TIMEOUT -l deu $stringMerged $OUTPUT
-    ts echo "ORC done removing temporary files..."
-    ts rm  -f $stringOdd $stringEven
+    ocrmypdf -c -d -f --tesseract-timeout TIMEOUT -l deu $stringMerged $OUTPUT
+    echo "ORC done removing temporary files..."
+    rm  -f $stringOdd $stringEven
   fi
 
   sleep 1
-  ts mv $stringMerged $stringMerged\_$(date +%F-%T)
+  mv $stringMerged $stringMerged\_$(date +%F-%T)
   sleep 2 #needed when copying multiple files into the Input folder
-  ts echo "done..."
+  echo "done..."
   exit
 fi
