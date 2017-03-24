@@ -17,4 +17,7 @@ USER r
 
 RUN cd /home/r && incrontab -l > mycron && echo '/srv/input IN_CREATE /opt/mergepdf.sh $#' >> mycron && incrontab mycron && rm mycron
 USER root
-CMD ["/bin/sed -i s/TIMEOUT/$TIMEOUT/g /opt/mergepdf.sh && /usr/sbin/incrond","-n"]
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/sbin/incrond","-n"]
