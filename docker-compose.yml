@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  mergepdf:
+    build: .
+    volumes:
+      - input:/srv/input
+      - output:/srv/output
+volumes:
+  input: {}
+  output: {}
